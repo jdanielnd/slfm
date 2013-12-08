@@ -17,7 +17,6 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
     arma::rowvec p_star = rep(0.5, m);
     arma::rowvec lambda = rnorm(n, 0, 1);
 
-    arma::rowvec debug = rep(0.0, m);
     arma::mat debug_matrix(ite, m);
 
     arma::mat dinv(m, m);
@@ -90,8 +89,6 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
             if (isnan(alpha[i])) {throw std::runtime_error("alpha should not be NaN");}
             if (isnan(p_star[i])) {throw std::runtime_error("p_star should not be NaN");}
             if (isnan(dinv(i,i))) {throw std::runtime_error("dinv should not be NaN");}
-
-            debug[i] = dinv(i,i);
         }
 
         for(int j = 0; j<n; j++) {
@@ -115,13 +112,12 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
             lambda[j] = R::rnorm(m_lambda, sqrt(v_lambda));
         }
 
-        alpha_matrix.row(k) = alpha;
+        alpha_matrix.row(k) = alpha.t();
         lambda_matrix.row(k) = lambda;
         sigma_matrix.row(k) = sigma2;
         z_matrix.row(k) = z;
         p_matrix.row(k) = p_star;
-        debug_matrix.row(k) = debug;
 
     }
-    return wrap(debug_matrix);             // Return to R
+    return wrap(alpha_matrix);             // Return to R
 }

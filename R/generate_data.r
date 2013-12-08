@@ -16,4 +16,5 @@ sample_data <- function(m = 40, n = 251) {
 	# MATRIZ X
 	x = alpha%*%lambda+epsilon
 	x
+	list(x = x, alpha = alpha, lambda = lambda, sigma2 = sigma2)
 }
