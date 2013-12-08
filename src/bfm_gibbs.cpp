@@ -5,8 +5,8 @@
 using namespace Rcpp;       // shorthand
 
 // [[Rcpp::export]]
-NumericMatrix bfmu_c(NumericMatrix x, int ite, double a, double b, double gamma_a,
-    double gamma_b, double omega, double omega_1) {
+NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
+    double gamma_b = 1, double omega = 10, double omega_1 = 0.01) {
 
     int m = x.nrow();
     int n = x.ncol();
@@ -21,6 +21,7 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a, double b, double gamma_
     arma::mat debug_matrix(ite, m);
 
     arma::mat dinv(m, m);
+    dinv.fill(0.0);
 
     arma::mat alpha_matrix(ite, m);
     arma::mat lambda_matrix(ite, n);
@@ -94,10 +95,20 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a, double b, double gamma_
         }
 
         for(int j = 0; j<n; j++) {
-            double v_lambda = 1/(arma::as_scalar(alpha.t()*dinv*alpha + 1));
-            double m_lambda = v_lambda*(arma::as_scalar(alpha.t()*dinv*x_arma.col(j)));
+            arma::mat aux_1 = alpha.t()*dinv*alpha + 1;
+            arma::mat aux_2 = alpha.t()*dinv*x_arma.col(j);
+            if (aux_1.n_rows != 1) {throw std::runtime_error("aux_1 should have 1 row");}
+            if (aux_1.n_cols != 1) {throw std::runtime_error("aux_1 should have 1 col");}
+            if (!alpha.is_finite()) {throw std::runtime_error("alpha should be finite");}
+            if (!dinv.is_finite()) {throw std::runtime_error("dinv should be finite");}
+            if (!aux_1.is_finite()) {throw std::runtime_error("aux_1 should be finite");}
+            
+
+            double v_lambda = 1/(arma::as_scalar(aux_1));
+            double m_lambda = v_lambda*(arma::as_scalar(aux_2));
 
             if (v_lambda<0) {throw std::runtime_error("v_lambda cannot be negative");}
+            if (isnan(v_lambda)) {throw std::runtime_error("v_lambda should not be NaN");}
             if (isnan(m_lambda)) {throw std::runtime_error("m_lambda should not be NaN");}
             if (isnan(lambda[j])) {throw std::runtime_error("lambda should not be NaN");}
 

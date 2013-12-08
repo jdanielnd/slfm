@@ -7,7 +7,7 @@
 using namespace Rcpp;
 
 // bfmu_c
-NumericMatrix bfmu_c(NumericMatrix x, int ite, double a, double b, double gamma_a, double gamma_b, double omega, double omega_1);
+NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1, double gamma_b = 1, double omega = 10, double omega_1 = 0.01);
 RcppExport SEXP bfm_bfmu_c(SEXP xSEXP, SEXP iteSEXP, SEXP aSEXP, SEXP bSEXP, SEXP gamma_aSEXP, SEXP gamma_bSEXP, SEXP omegaSEXP, SEXP omega_1SEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
