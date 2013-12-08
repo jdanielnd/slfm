@@ -1,0 +1,4 @@
+bfm
+===
+
+Bayes Factor model
