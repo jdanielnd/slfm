@@ -1,0 +1,9 @@
+Package: bfm
+Title: Bayesian Factor Model
+Version: 0.1
+Author: Joao Duarte and Vinicius Mayrink
+Maintainer: Joao Duarte <jdanielnd@gmail.com>
+Description: 
+License: GPL-2
+Depends: Rcpp (>= 0.10.4), RcppArmadillo
+LinkingTo: Rcpp, RcppArmadillo
