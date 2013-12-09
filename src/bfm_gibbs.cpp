@@ -11,13 +11,11 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
     int m = x.nrow();
     int n = x.ncol();
 
-    arma::colvec alpha = rep(0.1, m);
-    arma::rowvec sigma2 = rep(1.0, m);
-    arma::rowvec z = rep(0.0, m);
-    arma::rowvec p_star = rep(0.5, m);
-    arma::rowvec lambda = rnorm(n, 0, 1);
-
-    arma::mat debug_matrix(ite, m);
+    arma::colvec alpha(rep(0.1, m));
+    arma::rowvec sigma2(rep(1.0, m));
+    arma::rowvec z(rep(0.0, m));
+    arma::rowvec p_star(rep(0.5, m));
+    arma::rowvec lambda(rnorm(n, 0, 1));
 
     arma::mat dinv(m, m);
     dinv.fill(0.0);
@@ -36,7 +34,7 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
             double B = b + 0.5*(arma::as_scalar(x_arma.row(i)*x_arma.row(i).t()) -
                 2*arma::as_scalar(lambda*x_arma.row(i).t())*alpha[i] + 
                 alpha[i]*arma::as_scalar(lambda*lambda.t())*alpha[i]);
-            sigma2[i] = 1/R::rgamma(A, B);
+            sigma2[i] = 1/R::rgamma(A, 1/B);
 
             if(R::runif(0,1) < p_star[i]) {
                 z[i] = 1;
@@ -56,8 +54,6 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
             double lambda_x_sum = 0.0;
             for(int j = 0; j<n; j++) {
                 lambda_x_sum += x_arma(i,j)*lambda[j];
-                if (isnan(lambda[j])) {throw std::runtime_error("lambda[j] should not be NaN");}
-                if (isnan(x_arma(i,j))) {throw std::runtime_error("x_arma(i,j) should not be NaN");}
             }
             double m_alpha_0 = v_alpha_0*(lambda_x_sum/sigma2[i]);
             
@@ -79,35 +75,11 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
 
             dinv(i,i) = 1/sigma2[i];
 
-            if (sigma2[i]<0) {throw std::runtime_error("sigma2 should not be negative");}
-            if (isnan(lambda_x_sum)) {throw std::runtime_error("lambda_x_sum should not be NaN");}
-            if (v_alpha_0<0) {throw std::runtime_error("v_alpha_0 should not be negative");}
-            if (v_alpha_1<0) {throw std::runtime_error("v_alpha_1 should not be negative");}
-            if (isnan(m_alpha_0)) {throw std::runtime_error("m_alpha_0 should not be NaN");}
-            if (isnan(m_alpha_1)) {throw std::runtime_error("m_alpha_1 should not be NaN");}
-            if (isnan(sigma2[i])) {throw std::runtime_error("sigma should not be NaN");}
-            if (isnan(alpha[i])) {throw std::runtime_error("alpha should not be NaN");}
-            if (isnan(p_star[i])) {throw std::runtime_error("p_star should not be NaN");}
-            if (isnan(dinv(i,i))) {throw std::runtime_error("dinv should not be NaN");}
         }
 
         for(int j = 0; j<n; j++) {
-            arma::mat aux_1 = alpha.t()*dinv*alpha + 1;
-            arma::mat aux_2 = alpha.t()*dinv*x_arma.col(j);
-            if (aux_1.n_rows != 1) {throw std::runtime_error("aux_1 should have 1 row");}
-            if (aux_1.n_cols != 1) {throw std::runtime_error("aux_1 should have 1 col");}
-            if (!alpha.is_finite()) {throw std::runtime_error("alpha should be finite");}
-            if (!dinv.is_finite()) {throw std::runtime_error("dinv should be finite");}
-            if (!aux_1.is_finite()) {throw std::runtime_error("aux_1 should be finite");}
-            
-
-            double v_lambda = 1/(arma::as_scalar(aux_1));
-            double m_lambda = v_lambda*(arma::as_scalar(aux_2));
-
-            if (v_lambda<0) {throw std::runtime_error("v_lambda cannot be negative");}
-            if (isnan(v_lambda)) {throw std::runtime_error("v_lambda should not be NaN");}
-            if (isnan(m_lambda)) {throw std::runtime_error("m_lambda should not be NaN");}
-            if (isnan(lambda[j])) {throw std::runtime_error("lambda should not be NaN");}
+            double v_lambda = 1/(arma::as_scalar(alpha.t()*dinv*alpha + 1));
+            double m_lambda = v_lambda*(arma::as_scalar(alpha.t()*dinv*x_arma.col(j)));
 
             lambda[j] = R::rnorm(m_lambda, sqrt(v_lambda));
         }

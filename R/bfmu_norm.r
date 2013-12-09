@@ -21,7 +21,8 @@ bfmu_r <- function(x, ite=1000, omega=10, omega_1=omega/1000, a=2.1, b=1.1, gamm
       for(i in 1:m) {
         # sigma sampling
         A <- a + n/2
-        B <- b + 0.5*( x[i,]%*%x[i,] -2*lambda%*%x[i,]*alpha[i] +alpha[i]*lambda%*%t(lambda)*alpha[i])
+        B <- b + 0.5*( x[i,]%*%x[i,] -2*lambda%*%x[i,]*alpha[i] +
+          alpha[i]*lambda%*%t(lambda)*alpha[i])
         sigma2[i] <- 1/rgamma(1,A,rate=B) 
        
         z[i] <- ifelse(runif(1)<p_star[i],1,0)
@@ -61,11 +62,9 @@ bfmu_r <- function(x, ite=1000, omega=10, omega_1=omega/1000, a=2.1, b=1.1, gamm
       z.matrix[k,] <- z
       p.matrix[k,] <- p_star
     }
-    # list(alpha.matrix,lambda.matrix,sigma.matrix,z.matrix,p.matrix)
-    p.matrix
+    alpha.matrix
   },error=function(e) {
-    # list(alpha.matrix,lambda.matrix,sigma.matrix,z.matrix,p.matrix)
-    p.matrix
+    alpha.matrix
   })
   
 }
