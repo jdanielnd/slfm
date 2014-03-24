@@ -3,7 +3,7 @@ Title: Sparse Latent Factor Model
 Version: 0.1
 Author: Joao Duarte and Vinicius Mayrink
 Maintainer: Joao Duarte <jdanielnd@gmail.com>
-Description: Bayesian Factor Model
+Description: Sparse Latent Factor Model
 License: GPL-2
 Depends:
     Rcpp (>= 0.10.4),
