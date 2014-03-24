@@ -9,4 +9,5 @@ Depends:
     RcppArmadillo
 LinkingTo: Rcpp, RcppArmadillo
 Imports:
-    coda
+    coda,
+    Rcpp
