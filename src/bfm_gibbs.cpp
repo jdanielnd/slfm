@@ -83,5 +83,5 @@ NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, d
         p_matrix.row(k) = p_star;
 
     }
-    return wrap(alpha_matrix);             // Return to R
+    return wrap(p_matrix);             // Return to R
 }

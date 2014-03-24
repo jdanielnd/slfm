@@ -1,2 +1,0 @@
-useDynLib(bfm)
-exportPattern("^[[:alpha:]]+")

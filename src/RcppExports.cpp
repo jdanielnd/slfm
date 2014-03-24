@@ -13,14 +13,14 @@ BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        NumericMatrix x = Rcpp::as<NumericMatrix >(xSEXP);
-        int ite = Rcpp::as<int >(iteSEXP);
-        double a = Rcpp::as<double >(aSEXP);
-        double b = Rcpp::as<double >(bSEXP);
-        double gamma_a = Rcpp::as<double >(gamma_aSEXP);
-        double gamma_b = Rcpp::as<double >(gamma_bSEXP);
-        double omega = Rcpp::as<double >(omegaSEXP);
-        double omega_1 = Rcpp::as<double >(omega_1SEXP);
+        Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP );
+        Rcpp::traits::input_parameter< int >::type ite(iteSEXP );
+        Rcpp::traits::input_parameter< double >::type a(aSEXP );
+        Rcpp::traits::input_parameter< double >::type b(bSEXP );
+        Rcpp::traits::input_parameter< double >::type gamma_a(gamma_aSEXP );
+        Rcpp::traits::input_parameter< double >::type gamma_b(gamma_bSEXP );
+        Rcpp::traits::input_parameter< double >::type omega(omegaSEXP );
+        Rcpp::traits::input_parameter< double >::type omega_1(omega_1SEXP );
         NumericMatrix __result = bfmu_c(x, ite, a, b, gamma_a, gamma_b, omega, omega_1);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
