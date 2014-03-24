@@ -2,6 +2,6 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 bfmu_c <- function(x, ite, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1, omega = 10, omega_1 = 0.01) {
-    .Call('bfm_bfmu_c', PACKAGE = 'bfm', x, ite, a, b, gamma_a, gamma_b, omega, omega_1)
+    .Call('slfm_bfmu_c', PACKAGE = 'slfm', x, ite, a, b, gamma_a, gamma_b, omega, omega_1)
 }
 

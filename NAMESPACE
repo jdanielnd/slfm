@@ -1,0 +1,2 @@
+export(slfm)
+importFrom(coda,as.mcmc)

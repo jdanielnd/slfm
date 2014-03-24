@@ -6,7 +6,6 @@ Maintainer: Joao Duarte <jdanielnd@gmail.com>
 Description: Sparse Latent Factor Model
 License: GPL-2
 Depends:
-    Rcpp (>= 0.10.4),
     RcppArmadillo
 LinkingTo: Rcpp, RcppArmadillo
 Imports:
