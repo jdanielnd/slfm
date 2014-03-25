@@ -1,11 +1,10 @@
 // load Rcpp
 #include <RcppArmadillo.h>
-// [[Rcpp::depends(RcppArmadillo)]]
 
 using namespace Rcpp;       // shorthand
 
 // [[Rcpp::export]]
-NumericMatrix bfmu_c(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
+NumericMatrix gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
     double gamma_b = 1, double omega = 10, double omega_1 = 0.01) {
 
     int m = x.nrow();

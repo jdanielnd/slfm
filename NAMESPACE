@@ -1,2 +1,5 @@
 export(slfm)
+export(slfm.list)
+importFrom(Rcpp,evalCpp)
 importFrom(coda,as.mcmc)
+useDynLib(slfm)

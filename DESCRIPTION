@@ -5,9 +5,7 @@ Author: Joao Duarte and Vinicius Mayrink
 Maintainer: Joao Duarte <jdanielnd@gmail.com>
 Description: Sparse Latent Factor Model
 License: GPL-2
-Depends:
-    RcppArmadillo
 LinkingTo: Rcpp, RcppArmadillo
 Imports:
-    coda,
-    Rcpp
+    Rcpp (>= 0.11.0),
+    coda
