@@ -16,7 +16,7 @@
 #' @importFrom coda HPDinterval
 #' @importFrom tools file_path_sans_ext
 #' @export
-slfm.list <- function(
+slfm_list <- function(
   path = ".", recursive = TRUE, ite,
   a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1,
   omega = 10, omega_1 = 0.01, burnin = 500) {
@@ -32,10 +32,10 @@ slfm.list <- function(
     mat <- read.table(file_name)
 
     res <- slfm(mat, ite, a, b, gamma_a, gamma_b, omega, omega_1, burnin)
-    hpd <- coda::HPDinterval(res)
+    hpd <- coda::HPDinterval(res$p_star)
     clas <- class_interval(hpd)
     final_clas <- names(which.max(table(clas)))
-    results_list[[i]] <- c(name=basename(file_path_sans_ext(file_name)), clas=final_clas)
+    results_list[[i]] <- c(name=basename(tools::file_path_sans_ext(file_name)), clas=final_clas)
 
     setTxtProgressBar(pb, i)
   }

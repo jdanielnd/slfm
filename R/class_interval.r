@@ -12,3 +12,13 @@ class_interval_uni <- function(x, cv = 0.5) {
 class_interval <- function(x, cv = 0.5) {
     apply(x, 1, class_interval_uni)
 }
+
+format_classification <- function(x) {
+  x <- as.factor(x)
+  lvls <- levels(x)
+  lvls[lvls == "P"] <- "Present"
+  lvls[lvls == "M"] <- "Marginal"
+  lvls[lvls == "A"] <- "Absent"
+  levels(x) <- lvls
+  x
+}

@@ -4,7 +4,7 @@
 using namespace Rcpp;       // shorthand
 
 // [[Rcpp::export]]
-NumericMatrix gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
+List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
     double gamma_b = 1, double omega = 10, double omega_1 = 0.01) {
 
     int m = x.nrow();
@@ -82,5 +82,10 @@ NumericMatrix gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, do
         p_matrix.row(k) = p_star;
 
     }
-    return wrap(p_matrix);             // Return to R
+    return Rcpp::List::create(        
+        Rcpp::Named("alpha", wrap(alpha_matrix)),
+        Rcpp::Named("lambda", wrap(lambda_matrix)),
+        Rcpp::Named("sigma", wrap(sigma_matrix)),
+        Rcpp::Named("p_star", wrap(p_matrix))
+        );             // Return to R
 }

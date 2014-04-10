@@ -1,12 +1,15 @@
-\name{slfm}
-\alias{slfm}
-\title{Sparse Latent Factor Model}
+\name{slfm_list}
+\alias{slfm_list}
+\title{Fit SLFM to the matrices inside a directory}
 \usage{
-slfm(x, ite, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1, omega = 10,
-  omega_1 = 0.01, burnin = round(0.25 * ite))
+slfm_list(path = ".", recursive = TRUE, ite, a = 2.1, b = 1.1,
+  gamma_a = 1, gamma_b = 1, omega = 10, omega_1 = 0.01, burnin = 500)
 }
 \arguments{
-  \item{x}{matrix with the pre-processed data}
+  \item{path}{path to read the matrices from}
+
+  \item{recursive}{if the function should look recursively
+  inside folders}
 
   \item{ite}{number of iterations of the MCMC algorith}
 
@@ -26,6 +29,6 @@ slfm(x, ite, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1, omega = 10,
 }
 \description{
 This function is used to fit a Bayesian sparse latent
-factor model.
+factor model to a directory of numeric matrices.
 }
 

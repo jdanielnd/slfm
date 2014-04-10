@@ -1,0 +1,9 @@
+* Criar objeto SLFM
+* Incluir:
+  - Dados originais
+  - Matriz de cadeias do q*
+  - Estimativas médias dos parâmetros
+  - HPDs dos parâmetros
+  - Classificação dos alphas
+* Criar função print.slfm
+* Criar função plot.slfm
