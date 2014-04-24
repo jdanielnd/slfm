@@ -1,4 +1,5 @@
-bfmu_r <- function(x, ite=1000, omega=10, omega_1=omega/1000, a=2.1, b=1.1, gamma_a=1, gamma_b=1) {
+#' @export
+slfm_r <- function(x, ite=1000, omega=10, omega_1=omega/1000, a=2.1, b=1.1, gamma_a=1, gamma_b=1) {
 
   alpha <- array(0.1,c(nrow(x),1))
   sigma2 <- array(1,c(nrow(x),1))
@@ -62,9 +63,9 @@ bfmu_r <- function(x, ite=1000, omega=10, omega_1=omega/1000, a=2.1, b=1.1, gamm
       z.matrix[k,] <- z
       p.matrix[k,] <- p_star
     }
-    alpha.matrix
+    p.matrix
   },error=function(e) {
-    alpha.matrix
+    p.matrix
   })
   
 }
