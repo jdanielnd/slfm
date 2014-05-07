@@ -1,13 +1,16 @@
 Package: slfm
+Type: Package
 Title: Sparse Latent Factor Model
 Version: 0.1
 Author: Joao Duarte and Vinicius Mayrink
 Maintainer: Joao Duarte <jdanielnd@gmail.com>
-Description: Sparse Latent Factor Model
-License: GPL-2
-LinkingTo: Rcpp, RcppArmadillo
+Description: slfm is a set of tools to fit sparse latent factor models to
+    microarray data
+URL: https://github.com/jdanielnd/slfm
 Depends:
+    R (>= 3.1.0)
+Imports:
     Rcpp (>= 0.11.0),
-    coda,
-    lattice,
-    reshape
+    coda
+LinkingTo: Rcpp, RcppArmadillo
+License: GPL-2

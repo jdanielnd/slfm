@@ -11,7 +11,7 @@ slfm_list(path = ".", recursive = TRUE, ite, a = 2.1, b = 1.1,
   \item{recursive}{if the function should look recursively
   inside folders}
 
-  \item{ite}{number of iterations of the MCMC algorith}
+  \item{ite}{number of iterations of the MCMC algorithm}
 
   \item{a}{prior shape parameter for Gamma distribution}
 

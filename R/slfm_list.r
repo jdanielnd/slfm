@@ -5,7 +5,7 @@
 #'
 #' @param path path to read the matrices from
 #' @param recursive if the function should look recursively inside folders
-#' @param ite number of iterations of the MCMC algorith
+#' @param ite number of iterations of the MCMC algorithm
 #' @param a prior shape parameter for Gamma distribution 
 #' @param b prior scale parameter for Gamma distribution
 #' @param gamma_a prior parameter for Beta distribution
