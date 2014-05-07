@@ -1,7 +1,6 @@
 export(process_matrix)
 export(slfm)
 export(slfm_list)
-export(slfm_r)
 importFrom(Rcpp,evalCpp)
 importFrom(coda,HPDinterval)
 importFrom(coda,as.mcmc)

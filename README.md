@@ -10,4 +10,4 @@ slfm is a set of tools to fit sparse latent factor models to microarray data. Th
   * fit models to a set of matrices
   * detailed summary of model fit
 
-Considerable effort has been put into making plyr fast and memory efficient, so as slfm is an attractive alternative to simpler methods in terms of execution time.
+Considerable effort has been put into making slfm fast and memory efficient, so as slfm is an attractive alternative to simpler methods in terms of execution time.

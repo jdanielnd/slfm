@@ -3,7 +3,9 @@
 #' This function pre-process the data to be used
 #' for fitting a sparse latent factor model.
 #'
-#' @param list list of matrices with the pre-processed data
+#' @param path path containing the set of matrices to be processed
+#' @param output_path path to save the processed matrices
+#' @param sample_size number of matrices to be used on the principal component analysis
 #' @export
 
 process_matrix <- function(path, output_path, sample_size) {
