@@ -1,0 +1,8 @@
+slfm 0.1
+===========
+
+* new `slfm` function which fits a model to a matrix of microarray data
+
+* new `slfm_list` function which fits models to a set of matrices contained in a folder
+
+* new `process_matrix` function which pre-process a set of matrices contained in a folder

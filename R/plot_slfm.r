@@ -12,7 +12,7 @@
 #' @importFrom lattice levelplot
 #' @importFrom lattice bwplot
 #' @importFrom reshape melt
-#' @export
+## ' @export
 plot_slfm <- function(
   y, result, clas, stand = TRUE, reordRow = TRUE,
   reordCol = TRUE, highContrast = TRUE) {
