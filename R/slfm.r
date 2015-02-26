@@ -12,6 +12,7 @@
 #' @param omega prior variance of the slab component
 #' @param omega_1 prior variance of the spike component
 #' @param burnin burn-in size
+#' @param degenerate use the degenerate version of mixture
 #' @return x: data matrix
 #' @return p_star: matrix of MCMC chains for p_star parameter
 #' @return alpha: summary table of MCMC chains for alpha parameter

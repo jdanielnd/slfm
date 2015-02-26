@@ -1,7 +1,7 @@
 Package: slfm
 Type: Package
 Title: Sparse Latent Factor Model
-Version: 0.1
+Version: 0.2
 Author: Joao Duarte and Vinicius Mayrink
 Maintainer: Joao Duarte <jdanielnd@gmail.com>
 Description: slfm is a set of tools to fit sparse latent factor models to
