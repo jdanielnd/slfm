@@ -1,3 +1,10 @@
+slfm 0.2
+===========
+
+* alpha inference now uses just the interested part of the chain
+
+* user can now choose which type of mixture to use (degenerate TRUE or FALSE)
+
 slfm 0.1
 ===========
 
