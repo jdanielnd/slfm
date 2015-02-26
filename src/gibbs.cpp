@@ -5,7 +5,7 @@ using namespace Rcpp;       // shorthand
 
 // [[Rcpp::export]]
 List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
-    double gamma_b = 1, double omega = 10, double omega_1 = 0.01) {
+    double gamma_b = 1, double omega = 10, double omega_1 = 0.01, bool degenerate = false) {
 
     int m = x.nrow();
     int n = x.ncol();
@@ -58,9 +58,13 @@ List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamm
             if(z[i]) {
                 alpha[i] = R::rnorm(m_alpha_0, sqrt(v_alpha_0));
             } else {
-                alpha[i] = R::rnorm(m_alpha_1, sqrt(v_alpha_1));
+                if(degenerate) {
+                    alpha[i] = 0;
+                } else {
+                    alpha[i] = R::rnorm(m_alpha_1, sqrt(v_alpha_1));
+                }
             }
-
+            
             p_star[i] = p/(p + exp(R::dnorm(0, m_alpha_0, sqrt(v_alpha_0), true) -
                 R::dnorm(0, 0, sqrt(omega), true) + R::dnorm(0, 0, sqrt(omega_1), true) - 
                 R::dnorm(0, m_alpha_1, sqrt(v_alpha_1), true))*(1-p));
@@ -86,6 +90,7 @@ List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamm
         Rcpp::Named("alpha", wrap(alpha_matrix)),
         Rcpp::Named("lambda", wrap(lambda_matrix)),
         Rcpp::Named("sigma", wrap(sigma_matrix)),
-        Rcpp::Named("p_star", wrap(p_matrix))
+        Rcpp::Named("p_star", wrap(p_matrix)),
+        Rcpp::Named("z_matrix", wrap(z_matrix))
         );             // Return to R
 }

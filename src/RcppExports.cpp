@@ -7,8 +7,8 @@
 using namespace Rcpp;
 
 // gibbs
-List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1, double gamma_b = 1, double omega = 10, double omega_1 = 0.01);
-RcppExport SEXP slfm_gibbs(SEXP xSEXP, SEXP iteSEXP, SEXP aSEXP, SEXP bSEXP, SEXP gamma_aSEXP, SEXP gamma_bSEXP, SEXP omegaSEXP, SEXP omega_1SEXP) {
+List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1, double gamma_b = 1, double omega = 10, double omega_1 = 0.01, bool degenerate = false);
+RcppExport SEXP slfm_gibbs(SEXP xSEXP, SEXP iteSEXP, SEXP aSEXP, SEXP bSEXP, SEXP gamma_aSEXP, SEXP gamma_bSEXP, SEXP omegaSEXP, SEXP omega_1SEXP, SEXP degenerateSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -21,7 +21,8 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< double >::type gamma_b(gamma_bSEXP );
         Rcpp::traits::input_parameter< double >::type omega(omegaSEXP );
         Rcpp::traits::input_parameter< double >::type omega_1(omega_1SEXP );
-        List __result = gibbs(x, ite, a, b, gamma_a, gamma_b, omega, omega_1);
+        Rcpp::traits::input_parameter< bool >::type degenerate(degenerateSEXP );
+        List __result = gibbs(x, ite, a, b, gamma_a, gamma_b, omega, omega_1, degenerate);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

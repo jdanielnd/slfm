@@ -9,7 +9,7 @@ class_interval_uni <- function(x, cv = 0.5) {
     return(clas)
 }
 
-class_interval <- function(x, cv = 0.5) {
+class_interval <- function(x) {
     apply(x, 1, class_interval_uni)
 }
 
@@ -21,4 +21,8 @@ format_classification <- function(x) {
   lvls[lvls == "A"] <- "Absent"
   levels(x) <- lvls
   x
+}
+
+class_mean <- function(x, cv=0.5) {
+  x[,1] > cv
 }
