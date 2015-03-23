@@ -1,10 +1,10 @@
 Package: slfm
 Type: Package
-Title: Tools for fitting sparse latent factor model
+Title: Tools for Fitting Sparse Latent Factor Model
 Version: 0.2
 Author: Joao Duarte and Vinicius Mayrink
 Maintainer: Joao Duarte <jdanielnd@gmail.com>
-Description: set of tools to find coherent patterns in microarray data
+Description: Set of tools to find coherent patterns in microarray data
     using a Bayesian sparse latent factor model. Considerable effort has
     been put into making slfm fast and memory efficient, turning it an
     interesting alternative to simpler methods in terms of execution time.
