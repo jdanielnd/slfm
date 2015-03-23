@@ -1,16 +1,12 @@
 ## Test environments
 * local Ubuntu 14.04 install, R 3.1.2
+* local Ubuntu 14.04 install, R-devel 2015-03-01 r67921
 * ubuntu 12.04 (on travis-ci), R 3.1.2
 * win-builder (devel and release)
 
-Unable to test in R-devel due to following errors:
-
-> Warning message:
-> package ‘Rcpp’ is not available (for R Under development)
-
 ## Review about last submission
-* Improved Description field in DESCRIPTION file.
-* Added reference to paper about model on slfm.Rd file
+* Improved DESCRIPTION file.
+* Tested on R-devel
 
 ## R CMD check results
 There were no ERRORs, WARNINGs or NOTEs.
