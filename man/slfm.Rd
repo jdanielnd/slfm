@@ -49,4 +49,7 @@ latent factor model.
 mat <- matrix(rnorm(2000), nrow = 20)
 slfm(mat, ite = 1000)
 }
+\references{
+1. Duarte, J. D. N. and Mayrink, V. D. (2015). Factor analysis with mixture modeling to evaluate coherent patterns in microarray data. In Interdisciplinary Bayesian Statistics, volume 118 of Springer Proceedings in Mathematics & Statistics, pages 185-195. Springer International Publishing.
+}
 

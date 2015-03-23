@@ -5,7 +5,7 @@ using namespace Rcpp;       // shorthand
 
 // [[Rcpp::export]]
 List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamma_a = 1,
-    double gamma_b = 1, double omega = 10, double omega_1 = 0.01, bool degenerate = false) {
+    double gamma_b = 1, double omega_0 = 0.01, double omega_1 = 10, bool degenerate = false) {
 
     int m = x.nrow();
     int n = x.ncol();
@@ -45,7 +45,7 @@ List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamm
             for(int j = 0; j<n; j++) {
                 lambda_ss += pow(lambda[j], 2);
             }
-            double v_alpha_0 = 1/(1/omega + lambda_ss/sigma2[i]);
+            double v_alpha_0 = 1/(1/omega_0 + lambda_ss/sigma2[i]);
             double lambda_x_sum = 0.0;
             for(int j = 0; j<n; j++) {
                 lambda_x_sum += x_arma(i,j)*lambda[j];
@@ -56,18 +56,23 @@ List gibbs(NumericMatrix x, int ite, double a = 2.1, double b = 1.1, double gamm
             double m_alpha_1 = v_alpha_1*(lambda_x_sum/sigma2[i]);
 
             if(z[i]) {
-                alpha[i] = R::rnorm(m_alpha_0, sqrt(v_alpha_0));
+                alpha[i] = R::rnorm(m_alpha_1, sqrt(v_alpha_1));
             } else {
                 if(degenerate) {
                     alpha[i] = 0;
                 } else {
-                    alpha[i] = R::rnorm(m_alpha_1, sqrt(v_alpha_1));
+                    alpha[i] = R::rnorm(m_alpha_0, sqrt(v_alpha_0));
                 }
             }
             
-            p_star[i] = p/(p + exp(R::dnorm(0, m_alpha_0, sqrt(v_alpha_0), true) -
-                R::dnorm(0, 0, sqrt(omega), true) + R::dnorm(0, 0, sqrt(omega_1), true) - 
-                R::dnorm(0, m_alpha_1, sqrt(v_alpha_1), true))*(1-p));
+            if(degenerate) {
+                p_star[i] = p/(p + exp(R::dnorm(0, m_alpha_1, sqrt(v_alpha_1), true) -
+                    R::dnorm(0, 0, sqrt(omega_1), true))*(1-p));
+            } else {
+                p_star[i] = p/(p + exp(R::dnorm(0, m_alpha_1, sqrt(v_alpha_1), true) -
+                    R::dnorm(0, 0, sqrt(omega_1), true) + R::dnorm(0, 0, sqrt(omega_0), true) - 
+                    R::dnorm(0, m_alpha_0, sqrt(v_alpha_0), true))*(1-p));
+            }
 
             dinv(i,i) = 1/sigma2[i];
 

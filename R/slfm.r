@@ -2,6 +2,9 @@
 #'
 #' This function is used to fit a Bayesian sparse
 #' latent factor model.
+#' 
+#' @references
+#' 1. Duarte, J. D. N. and Mayrink, V. D. (2015). Factor analysis with mixture modeling to evaluate coherent patterns in microarray data. In Interdisciplinary Bayesian Statistics, volume 118 of Springer Proceedings in Mathematics & Statistics, pages 185-195. Springer International Publishing.
 #'
 #' @param x matrix with the pre-processed data
 #' @param ite number of iterations of the MCMC algorithm
@@ -9,8 +12,8 @@
 #' @param b prior scale parameter for Gamma distribution
 #' @param gamma_a prior parameter for Beta distribution
 #' @param gamma_b prior parameter for Beta distribution
-#' @param omega prior variance of the slab component
-#' @param omega_1 prior variance of the spike component
+#' @param omega_0 prior variance of the spike component
+#' @param omega_1 prior variance of the slab component
 #' @param burnin burn-in size
 #' @param degenerate use the degenerate version of mixture
 #' @return x: data matrix
@@ -28,12 +31,12 @@
 #' slfm(mat, ite = 1000)
 slfm <- function(
   x, ite, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1,
-  omega = 10, omega_1 = 0.01, burnin = round(0.25*ite), degenerate = FALSE) {
+  omega_0 = 0.01, omega_1 = 10, burnin = round(0.25*ite), degenerate = FALSE) {
   
   # Convert the x input to numeric matrix
   x <- data.matrix(x)
 
-  res <- gibbs(x, ite, a, b, gamma_a, gamma_b, omega, omega_1, degenerate)
+  res <- gibbs(x, ite, a, b, gamma_a, gamma_b, omega_0, omega_1, degenerate)
 
   p_star_matrix <- coda::as.mcmc(res[["p_star"]][burnin:ite,])
   hpds_p_star <- coda::HPDinterval(p_star_matrix)
