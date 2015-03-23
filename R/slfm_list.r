@@ -10,8 +10,8 @@
 #' @param b prior scale parameter for Gamma distribution
 #' @param gamma_a prior parameter for Beta distribution
 #' @param gamma_b prior parameter for Beta distribution
-#' @param omega prior variance of the slab component
-#' @param omega_1 prior variance of the spike component
+#' @param omega_0 prior variance of the spike component
+#' @param omega_1 prior variance of the slab component
 #' @param burnin burn-in size
 #' @importFrom coda HPDinterval
 #' @importFrom tools file_path_sans_ext
@@ -19,7 +19,7 @@
 slfm_list <- function(
   path = ".", recursive = TRUE, ite,
   a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1,
-  omega = 10, omega_1 = 0.01, burnin = 500) {
+  omega_0 = 10, omega_1 = 0.01, burnin = 500) {
 
   files_list <- list.files(path, recursive = recursive, full.names = T)
 
@@ -31,7 +31,7 @@ slfm_list <- function(
     file_name <- files_list[i]
     mat <- read.table(file_name)
 
-    res <- slfm(mat, ite, a, b, gamma_a, gamma_b, omega, omega_1, burnin)
+    res <- slfm(mat, ite, a, b, gamma_a, gamma_b, omega_0, omega_1, burnin)
     hpd <- coda::HPDinterval(res$p_star)
     clas <- class_interval(hpd)
     final_clas <- names(which.max(table(clas)))

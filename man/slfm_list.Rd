@@ -5,7 +5,8 @@
 \title{Fit SLFM to the matrices inside a directory}
 \usage{
 slfm_list(path = ".", recursive = TRUE, ite, a = 2.1, b = 1.1,
-  gamma_a = 1, gamma_b = 1, omega = 10, omega_1 = 0.01, burnin = 500)
+  gamma_a = 1, gamma_b = 1, omega_0 = 10, omega_1 = 0.01,
+  burnin = 500)
 }
 \arguments{
 \item{path}{path to read the matrices from}
@@ -22,9 +23,9 @@ slfm_list(path = ".", recursive = TRUE, ite, a = 2.1, b = 1.1,
 
 \item{gamma_b}{prior parameter for Beta distribution}
 
-\item{omega}{prior variance of the slab component}
+\item{omega_0}{prior variance of the spike component}
 
-\item{omega_1}{prior variance of the spike component}
+\item{omega_1}{prior variance of the slab component}
 
 \item{burnin}{burn-in size}
 }
