@@ -30,9 +30,11 @@
 #' mat <- matrix(rnorm(2000), nrow = 20)
 #' slfm(mat, ite = 1000)
 slfm <- function(
-  x, ite, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1,
-  omega_0 = 0.01, omega_1 = 10, burnin = round(0.25*ite), degenerate = FALSE) {
+  x, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1,
+  omega_0 = 0.01, omega_1 = 10, sample = 1000, burnin = round(0.25*sample), degenerate = FALSE) {
   
+  ite <- sample + burnin
+
   # Convert the x input to numeric matrix
   x <- data.matrix(x)
 
@@ -43,6 +45,8 @@ slfm <- function(
   stats_p_star <- summary(p_star_matrix)$statistics
   alpha_clas <- format_classification(class_interval(hpds_p_star))
   alpha_clas_mean <- class_mean(stats_p_star)
+
+  alpha_matrix <- coda::as.mcmc(res[["alpha"]][burnin:ite,])
 
   table_alpha <- alpha_estimation(res[["alpha"]][burnin:ite,], alpha_clas_mean, res[["p_star"]][burnin:ite,])
 
@@ -64,6 +68,9 @@ slfm <- function(
     alpha = table_alpha,
     lambda = table_lambda,
     sigma = table_sigma,
+    alpha_matrix = alpha_matrix,
+    lambda_matrix = lambda_matrix,
+    sigma_matrix = sigma_matrix,
     classification = alpha_clas)
   class(obj) <- "slfm"
   obj
