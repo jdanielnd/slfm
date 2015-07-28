@@ -8,6 +8,9 @@
 #' @param reorder.cols reorder matrix cols based on pattern
 #' @param high.contrast apply transformation to matrix to increase contrast
 #' @importFrom lattice levelplot
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats median
+#' @importFrom stats quantile
 #' @export
 
 plot_matrix <- function(y, standardize.rows = TRUE, reorder.rows = TRUE, reorder.cols = TRUE, high.contrast = TRUE) {

@@ -6,6 +6,9 @@
 #' @param path path containing the set of matrices to be processed
 #' @param output_path path to save the processed matrices
 #' @param sample_size number of matrices to be used on the principal component analysis
+#' @importFrom stats cov
+#' @importFrom utils read.table
+#' @importFrom utils write.table
 #' @export
 
 process_matrix <- function(path, output_path, sample_size) {

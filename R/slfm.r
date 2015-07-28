@@ -25,6 +25,7 @@
 #' @return classification: classification of each alpha (`present`, `marginal`, `absent`)
 #' @export
 #' @importFrom coda as.mcmc
+#' @importFrom stats window
 #' @importFrom Rcpp evalCpp
 #' @useDynLib slfm
 #' @examples

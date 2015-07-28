@@ -17,6 +17,9 @@
 #' @param degenerate use the degenerate version of mixture
 #' @importFrom coda HPDinterval
 #' @importFrom tools file_path_sans_ext
+#' @importFrom utils read.table
+#' @importFrom utils setTxtProgressBar
+#' @importFrom utils txtProgressBar
 #' @export
 slfm_list <- function(
   path = ".", recursive = TRUE,
