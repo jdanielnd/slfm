@@ -1,4 +1,4 @@
-slfm 0.2
+slfm 0.2.0
 ===========
 
 * alpha inference now uses just the interested part of the chain
@@ -9,7 +9,7 @@ slfm 0.2
 
 * new `plot_matrix` function
 
-slfm 0.1
+slfm 0.1.0
 ===========
 
 * new `slfm` function which fits a model to a matrix of microarray data
