@@ -5,14 +5,16 @@
 #'
 #' @param path path to read the matrices from
 #' @param recursive if the function should look recursively inside folders
-#' @param ite number of iterations of the MCMC algorithm
 #' @param a prior shape parameter for Gamma distribution 
 #' @param b prior scale parameter for Gamma distribution
 #' @param gamma_a prior parameter for Beta distribution
 #' @param gamma_b prior parameter for Beta distribution
 #' @param omega_0 prior variance of the spike component
 #' @param omega_1 prior variance of the slab component
+#' @param sample sample size after burn-in
 #' @param burnin burn-in size
+#' @param lag lag for MCMC
+#' @param degenerate use the degenerate version of mixture
 #' @importFrom coda HPDinterval
 #' @importFrom tools file_path_sans_ext
 #' @export
