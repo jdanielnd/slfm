@@ -1,7 +1,7 @@
 Package: slfm
 Type: Package
 Title: Tools for Fitting Sparse Latent Factor Model
-Version: 0.2
+Version: 0.3
 Author: Joao Duarte and Vinicius Mayrink
 Maintainer: Joao Duarte <jdanielnd@gmail.com>
 Description: Set of tools to find coherent patterns in microarray data
@@ -15,7 +15,8 @@ Description: Set of tools to find coherent patterns in microarray data
     number of arrays.
 URL: https://github.com/jdanielnd/slfm
 Depends:
-    R (>= 3.1.0)
+    R (>= 3.1.0),
+    lattice
 Imports:
     Rcpp (>= 0.11.0),
     coda

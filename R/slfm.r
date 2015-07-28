@@ -31,36 +31,44 @@
 #' slfm(mat, ite = 1000)
 slfm <- function(
   x, a = 2.1, b = 1.1, gamma_a = 1, gamma_b = 1,
-  omega_0 = 0.01, omega_1 = 10, sample = 1000, burnin = round(0.25*sample), degenerate = FALSE) {
+  omega_0 = 0.01, omega_1 = 10, sample = 1000, burnin = round(0.25*sample), lag = 1, degenerate = FALSE) {
   
   ite <- sample + burnin
 
   # Convert the x input to numeric matrix
   x <- data.matrix(x)
 
-  res <- gibbs(x, ite, a, b, gamma_a, gamma_b, omega_0, omega_1, degenerate)
+  if(degenerate) {
+    res <- slfm_MDN(x, a, b, gamma_a, gamma_b, omega_1, burnin, lag, sample)
+  } else {
+    res <- slfm_MNN(x, a, b, gamma_a, gamma_b, omega_0, omega_1, burnin, lag, sample)
+  }
 
-  p_star_matrix <- coda::as.mcmc(res[["p_star"]][burnin:ite,])
+  after_burnin <- (burnin + 1):ite
+
+  p_star_matrix <- coda::as.mcmc(res[["qstar"]][after_burnin,])
   hpds_p_star <- coda::HPDinterval(p_star_matrix)
   stats_p_star <- summary(p_star_matrix)$statistics
   alpha_clas <- format_classification(class_interval(hpds_p_star))
   alpha_clas_mean <- class_mean(stats_p_star)
 
-  alpha_matrix <- coda::as.mcmc(res[["alpha"]][burnin:ite,])
+  alpha_matrix <- coda::as.mcmc(res[["alpha"]][after_burnin,])
 
-  table_alpha <- alpha_estimation(res[["alpha"]][burnin:ite,], alpha_clas_mean, res[["p_star"]][burnin:ite,])
+  table_alpha <- alpha_estimation(res[["alpha"]][after_burnin,], alpha_clas_mean, res[["qstar"]][after_burnin,])
 
-  lambda_matrix <- coda::as.mcmc(res[["lambda"]][burnin:ite,])
+  lambda_matrix <- coda::as.mcmc(res[["lambda"]][after_burnin,])
   stats_lambda <- summary(lambda_matrix)$statistics
   hpds_lambda <- coda::HPDinterval(lambda_matrix)
   table_lambda <- cbind(stats_lambda, hpds_lambda)[,-4]
   colnames(table_lambda)[4:5] = c("Upper HPD", "Lower HPD")
 
-  sigma_matrix <- coda::as.mcmc(res[["sigma"]][burnin:ite,])
+  sigma_matrix <- coda::as.mcmc(res[["sigma2"]][after_burnin,])
   stats_sigma <- summary(sigma_matrix)$statistics
   hpds_sigma <- coda::HPDinterval(sigma_matrix)
   table_sigma <- cbind(stats_sigma, hpds_sigma)[,-4]
   colnames(table_sigma)[4:5] = c("Upper HPD", "Lower HPD")
+
+  z_matrix <- coda::as.mcmc(res[["z"]][after_burnin,])
 
   obj <- list(
     x = x,
@@ -71,6 +79,7 @@ slfm <- function(
     alpha_matrix = alpha_matrix,
     lambda_matrix = lambda_matrix,
     sigma_matrix = sigma_matrix,
+    z_matrix = z_matrix,
     classification = alpha_clas)
   class(obj) <- "slfm"
   obj

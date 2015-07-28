@@ -5,6 +5,8 @@ slfm 0.2
 
 * user can now choose which type of mixture to use (degenerate TRUE or FALSE)
 
+* new `plot_matrix` function
+
 slfm 0.1
 ===========
 
