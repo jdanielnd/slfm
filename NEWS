@@ -1,3 +1,10 @@
+slfm 0.2.1
+===========
+
+* adding % significant column to slfm_list output
+
+* using S/N/I notation to slfm output
+
 slfm 0.2.0
 ===========
 
