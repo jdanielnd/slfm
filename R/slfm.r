@@ -81,10 +81,10 @@ slfm <- function(
     x = x,
     alpha = table_alpha,
     lambda = table_lambda,
-    sigma = table_sigma,
+    sigma2 = table_sigma,
     alpha_matrix = alpha_matrix,
     lambda_matrix = lambda_matrix,
-    sigma_matrix = sigma_matrix,
+    sigma2_matrix = sigma_matrix,
     q_star = q_star_matrix,
     z_matrix = z_matrix,
     classification = alpha_clas)

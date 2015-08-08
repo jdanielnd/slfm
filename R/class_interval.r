@@ -1,10 +1,10 @@
 class_interval_uni <- function(x, cv = 0.5) {
     if(x[2] < cv) {
-        clas <- "A"
+        clas <- "N"
     } else if(x[1] > cv) {
-        clas <- "P"
+        clas <- "S"
     } else {
-        clas <- "M"
+        clas <- "I"
     }
     return(clas)
 }
@@ -16,9 +16,9 @@ class_interval <- function(x) {
 format_classification <- function(x) {
   x <- as.factor(x)
   lvls <- levels(x)
-  lvls[lvls == "P"] <- "Present"
-  lvls[lvls == "M"] <- "Marginal"
-  lvls[lvls == "A"] <- "Absent"
+  lvls[lvls == "S"] <- "S"
+  lvls[lvls == "I"] <- "I"
+  lvls[lvls == "N"] <- "N"
   levels(x) <- lvls
   x
 }
