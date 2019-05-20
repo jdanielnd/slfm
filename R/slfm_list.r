@@ -38,13 +38,13 @@ slfm_list <- function(
   for(i in 1:length(files_list)) {
     file_name <- files_list[i]
     mat <- read.table(file_name)
-
     res <- slfm(mat, a, b, gamma_a, gamma_b, omega_0, omega_1, sample, burnin, lag, degenerate)
     clas_table <- table(res$classification)
     final_clas <- MATRIX_CLASSIFICATION[names(which.max(clas_table))]
-    freq <- format(round(clas_table["S"]/sum(clas_table), 4), nsmall = 4)
+    countS = clas_table["S"]
+    if(is.na(countS)==TRUE){countS = 0}
+    freq <- format(round(countS/sum(clas_table), 4), nsmall = 4)
     results_list[[i]] <- c(name = basename(tools::file_path_sans_ext(file_name)), clas = final_clas, frequency = freq)
-
     setTxtProgressBar(pb, i)
   }
   close(pb)
