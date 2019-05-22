@@ -1,27 +1,28 @@
-#' Sparse Latent Factor Model
+#' Sparse Latent Factor Model (SLFM)
 #'
-#' This function is used to fit a Bayesian sparse
-#' latent factor model.
+#' This function is used to fit a Bayesian Sparse
+#' Latent Factor Model to evaluate patterns in gene expression data matrices.
 #' 
 #' @references
 #' 1. Duarte, J. D. N. and Mayrink, V. D. (2015). Factor analysis with mixture modeling to evaluate coherent patterns in microarray data. In Interdisciplinary Bayesian Statistics, volume 118 of Springer Proceedings in Mathematics & Statistics, pages 185-195. Springer International Publishing.
 #'
-#' @param x matrix with the pre-processed data
-#' @param a prior shape parameter for Gamma distribution 
-#' @param b prior scale parameter for Gamma distribution
-#' @param gamma_a prior parameter for Beta distribution
-#' @param gamma_b prior parameter for Beta distribution
-#' @param omega_0 prior variance of the spike component
-#' @param omega_1 prior variance of the slab component
-#' @param sample sample size after burn-in
-#' @param burnin burn-in size
-#' @param lag lag for MCMC
-#' @param degenerate use the degenerate version of mixture
-#' @return x: data matrix
-#' @return q_star: matrix of MCMC chains for q_star parameter
-#' @return alpha: summary table of MCMC chains for alpha parameter
-#' @return lambda: summary table of MCMC chains for lambda parameter
-#' @return sigma: summary table of MCMC chains for sigma parameter
+#' @param x matrix with the pre-processed data.
+#' @param a positive shape parameter of the Inverse Gamma prior distribution (default = 2.1). 
+#' @param b positive scale parameter of the Inverse Gamma prior distribution (default = 1.1).
+#' @param gamma_a positive 1st shape parameter of the Beta prior distribution (default = 1).
+#' @param gamma_b positive 2nd shape parameter of the Beta prior distribution (default = 1).
+#' @param omega_0 prior variance of the spike mixture component (default = 0.01).
+#' @param omega_1 prior variance of the slab mixture component (default = 10).
+#' @param sample sample size to be considered for inference after the burn in period (default = 1000).
+#' @param burnin size of the burn in period in the MCMC algorithm (default = sample/4).
+#' @param lag lag to build the chains based on spaced draws from the Gibbs sampler (defaul = 1).
+#' @param degenerate logical argument (default = FALSE) indicating whether to use the degenerate version of 
+#' the mixture prior for the factor loadings.
+#' @return x: data matrix.
+#' @return q_star: matrix of MCMC chains for q_star parameter.
+#' @return alpha: summary table of MCMC chains for alpha parameter.
+#' @return lambda: summary table of MCMC chains for lambda parameter.
+#' @return sigma: summary table of MCMC chains for sigma parameter.
 #' @return classification: classification of each alpha (`present`, `marginal`, `absent`)
 #' @export
 #' @importFrom coda as.mcmc
@@ -55,10 +56,13 @@ slfm <- function(
   alpha_clas <- format_classification(class_interval(hpds_q_star))
   alpha_clas_mean <- class_mean(stats_q_star)
 
+  z_matrix <- coda::as.mcmc(res[["z"]][after_burnin,])
+  z_matrix <- window(z_matrix, thin = lag)
+
   alpha_matrix <- coda::as.mcmc(res[["alpha"]][after_burnin,])
   alpha_matrix <- window(alpha_matrix, thin = lag)
 
-  table_alpha <- alpha_estimation(res[["alpha"]][after_burnin,], alpha_clas_mean, res[["qstar"]][after_burnin,])
+  table_alpha <- alpha_estimation(res[["alpha"]][after_burnin,], alpha_clas_mean, res[["z"]][after_burnin,])
 
   lambda_matrix <- coda::as.mcmc(res[["lambda"]][after_burnin,])
   lambda_matrix <- window(lambda_matrix, thin = lag)
@@ -74,8 +78,6 @@ slfm <- function(
   table_sigma <- cbind(stats_sigma, hpds_sigma)[,-4]
   colnames(table_sigma)[4:5] = c("Upper HPD", "Lower HPD")
 
-  z_matrix <- coda::as.mcmc(res[["z"]][after_burnin,])
-  z_matrix <- window(z_matrix, thin = lag)
 
   obj <- list(
     x = x,
@@ -103,9 +105,9 @@ print.slfm <- function(x) {
   print(x$classification)
 }
 
-alpha_estimation <- function(x, alpha_clas, q_star_matrix) {
+alpha_estimation <- function(x, alpha_clas, z_matrix) {
   table_list <- lapply(1:length(alpha_clas), function(i) {
-    chain_indicator <- q_star_matrix[, i] > 0.5
+    chain_indicator <- z_matrix[, i] == 1
     if(alpha_clas[i]) {
       chain <- x[chain_indicator, i]
     } else {

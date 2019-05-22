@@ -1,12 +1,16 @@
-#' Plot matrix
+#' Image graph displaying a given data matrix.
 #'
-#' This function plots a data matrix
+#' This function builds an image graph displaying a heat map of a given data matrix.
 #'
-#' @param y matrix to be ploted
-#' @param standardize.rows standardize matrix rows for plot
-#' @param reorder.rows reorder matrix rows based on pattern
-#' @param reorder.cols reorder matrix cols based on pattern
-#' @param high.contrast apply transformation to matrix to increase contrast
+#' @param y data matrix to be evaluated.
+#' @param standardize.rows logical argument (default = TRUE) indicating whether to standardize 
+#' the rows of y to build the image.
+#' @param reorder.rows logical argument (default = TRUE) indicating whether to reorder the rows 
+#' of y to highlight a pattern.
+#' @param reorder.cols logical argument (default = TRUE) indicating whether to reorder the columns 
+#' of y to highlight a pattern.
+#' @param high.contrast logical argument (default = TRUE) indicating whether to apply a transformation 
+#' to increase contrast in the image of y.
 #' @importFrom lattice levelplot
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats median

@@ -1,20 +1,22 @@
-#' Fit SLFM to the matrices inside a directory
+#' Fitting the SLFM to a group of data matrices within a directory.
 #'
-#' This function is used to fit a Bayesian sparse
-#' latent factor model to a directory of numeric matrices.
+#' This function is used to fit the Bayesian Sparse
+#' Latent Factor Model to all numeric matrices located in a directory.
 #'
-#' @param path path to read the matrices from
-#' @param recursive if the function should look recursively inside folders
-#' @param a prior shape parameter for Gamma distribution 
-#' @param b prior scale parameter for Gamma distribution
-#' @param gamma_a prior parameter for Beta distribution
-#' @param gamma_b prior parameter for Beta distribution
-#' @param omega_0 prior variance of the spike component
-#' @param omega_1 prior variance of the slab component
-#' @param sample sample size after burn-in
-#' @param burnin burn-in size
-#' @param lag lag for MCMC
-#' @param degenerate use the degenerate version of mixture
+#' @param path path to the directory where the target data matrices are located.
+#' @param recursive logical argument (default = TRUE) indicating whether the function should look recursively 
+#' inside folders.
+#' @param a positive shape parameter of the Inverse Gamma prior distribution (default = 2.1).
+#' @param b positive scale parameter of the Inverse Gamma prior distribution (default = 1.1).
+#' @param gamma_a positive 1st shape parameter of the Beta prior distribution (default = 1).
+#' @param gamma_b positive 2nd shape parameter of the Beta prior distribution (default = 1).
+#' @param omega_0 prior variance of the spike mixture component (default = 0.01).
+#' @param omega_1 prior variance of the slab mixture component (default = 10).
+#' @param sample sample size to be considered for inference after the burn in period (default = 1000).
+#' @param burnin size of the burn in period in the MCMC algorithm (default = sample/4).
+#' @param lag lag to build the chains based on spaced draws from the Gibbs sampler (default = 1).
+#' @param degenerate logical argument (default = FALSE) indicating whether to use the degenerate version of 
+#' the mixture prior for the factor loadings.
 #' @importFrom coda HPDinterval
 #' @importFrom tools file_path_sans_ext
 #' @importFrom utils read.table

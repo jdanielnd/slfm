@@ -1,11 +1,11 @@
-#' Pre-process data for SLFM
+#' Procedure to pre-process the gene expression data to be fitted via SLFM.
 #'
-#' This function pre-process the data to be used
-#' for fitting a sparse latent factor model.
+#' This function is intended to pre-process the data matrices to be fitted 
+#' through the Sparse Latent Factor Model.
 #'
-#' @param path path containing the set of matrices to be processed
-#' @param output_path path to save the processed matrices
-#' @param sample_size number of matrices to be used on the principal component analysis
+#' @param path path to the directory containing the set of matrices to be pre-processed.
+#' @param output_path path to the directory intended to acommodate the saved pre-processed matrices.
+#' @param sample_size number of matrices to be used on the principal component analysis.
 #' @importFrom stats cov
 #' @importFrom utils read.table
 #' @importFrom utils write.table

@@ -1,8 +1,12 @@
+slfm 0.2.3
+===========
+
+* fixing a bug related to the calculation of the % significant loadings in the function slfm_fit. 
+
 slfm 0.2.2
 ===========
 
-* update frequency calculation method
-
+* changing chain indicator used in alpha estimator
 
 slfm 0.2.1
 ===========
